@@ -13,7 +13,7 @@ export interface Match {
   venue: string;
 }
 
-export type PredictionStyle = "bold" | "analytical" | "emotional";
+export type PredictionStyle = "bold" | "analytical" | "emotional" | "hot-take";
 export type Language = "en" | "es" | "fr" | "de" | "pt" | "ar" | "ja" | "zh";
 
 export const MATCHES: Match[] = [
@@ -247,4 +247,5 @@ export const STYLES: { value: PredictionStyle; label: string; desc: string }[] =
   { value: "bold", label: "Bold", desc: "Hot takes, strong opinions, no hedging" },
   { value: "analytical", label: "Analytical", desc: "Data-driven, tactical breakdown" },
   { value: "emotional", label: "Emotional", desc: "Passionate, dramatic, fan perspective" },
+  { value: "hot-take", label: "Hot Take 🔥", desc: "Viral, spicy, built for X and Instagram" },
 ];

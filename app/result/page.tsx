@@ -40,13 +40,10 @@ type LoadState =
 // Helpers
 // ---------------------------------------------------------------------------
 
-/** Grab just the first sentence (up to ~100 chars) for a tight 1–2 line verdict. */
 function firstSentence(text: string): string {
   const trimmed = text.trim();
-  // Split on the first sentence-ending punctuation
   const match = trimmed.match(/^(.+?[.!?])\s/);
   if (match && match[1].length <= 120) return match[1];
-  // Fallback: first 100 chars, snapped at word boundary
   if (trimmed.length <= 100) return trimmed;
   const cut = trimmed.slice(0, 100);
   return cut.slice(0, cut.lastIndexOf(" ")) + "…";
@@ -56,6 +53,7 @@ const VIRAL_HOOKS: Record<string, string> = {
   bold: "Hot take incoming — built for the timeline",
   analytical: "AI-generated match insight — ready to share",
   emotional: "Straight from the stands to your feed",
+  "hot-take": "🚨 AI SHOCK PREDICTION — screenshot this",
 };
 
 // ---------------------------------------------------------------------------
@@ -66,7 +64,6 @@ function Skeleton() {
   return (
     <main className="min-h-screen flex items-center justify-center">
       <div className="flex flex-col items-center gap-4">
-        {/* Card placeholder */}
         <div className="w-full max-w-md aspect-[1200/630] rounded-xl bg-surface animate-pulse" />
         <div className="h-4 w-48 bg-surface rounded animate-pulse" />
         <div className="h-3 w-32 bg-surface rounded animate-pulse" />
@@ -96,12 +93,14 @@ function Badge({
   variant = "default",
 }: {
   children: React.ReactNode;
-  variant?: "default" | "success" | "warning";
+  variant?: "default" | "success" | "warning" | "premium";
 }) {
   const colors: Record<string, string> = {
     default: "bg-surface border-zinc-700 text-zinc-400",
     success: "bg-neon/10 border-neon/30 text-neon",
     warning: "bg-yellow-500/10 border-yellow-500/30 text-yellow-400",
+    premium:
+      "bg-gradient-to-r from-neon/10 to-yellow-500/10 border-neon/40 text-neon",
   };
   return (
     <span
@@ -136,14 +135,17 @@ function ResultContent() {
     fetch(`/api/prediction?id=${encodeURIComponent(predictionId)}`)
       .then(async (res) => {
         const json = await res.json();
-        if (!res.ok) throw new Error(json.error || "Failed to load prediction");
-        if (!cancelled) setLoadState({ status: "ok", data: json as FetchedPrediction });
+        if (!res.ok)
+          throw new Error(json.error || "Failed to load prediction");
+        if (!cancelled)
+          setLoadState({ status: "ok", data: json as FetchedPrediction });
       })
       .catch((err) => {
         if (!cancelled)
           setLoadState({
             status: "error",
-            message: err instanceof Error ? err.message : "Failed to load prediction",
+            message:
+              err instanceof Error ? err.message : "Failed to load prediction",
           });
       });
 
@@ -164,7 +166,8 @@ function ResultContent() {
   // ---- Actions ----
   const handleCopyCaption = useCallback(async () => {
     if (!data) return;
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+    const siteUrl =
+      process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
     const text = `${data.prediction.socialCaption}\n\n${siteUrl}`;
     try {
       await navigator.clipboard.writeText(text);
@@ -204,7 +207,8 @@ function ResultContent() {
 
   // ---- States ----
   if (loadState.status === "loading") return <Skeleton />;
-  if (loadState.status === "error") return <ErrorState message={loadState.message} />;
+  if (loadState.status === "error")
+    return <ErrorState message={loadState.message} />;
   if (!data) return <ErrorState message="No prediction data found." />;
 
   const p = data.prediction;
@@ -214,20 +218,18 @@ function ResultContent() {
 
   return (
     <main className="min-h-screen flex flex-col items-center px-4 py-6 sm:py-10">
-      <div className="relative z-10 w-full max-w-md mx-auto flex flex-col gap-6">
+      <div className="relative z-10 w-full max-w-md mx-auto flex flex-col gap-5">
         {/* ================================================================ */}
         {/*  STATUS BADGES                                                   */}
         {/* ================================================================ */}
         <div className="flex items-center justify-center gap-2">
           {isFallback && <Badge variant="warning">Offline AI Model</Badge>}
-          {paid && <Badge variant="success">HD Unlocked ✓</Badge>}
-          {!paid && !isFallback && (
-            <Badge variant="default">Free Preview</Badge>
-          )}
+          {paid && <Badge variant="premium">✨ HD UNLOCKED</Badge>}
+          {!paid && !isFallback && <Badge variant="default">Free Preview</Badge>}
         </div>
 
         {/* ================================================================ */}
-        {/*  OG IMAGE — the product, large and centered                       */}
+        {/*  OG IMAGE — the product                                          */}
         {/* ================================================================ */}
         <div className="rounded-xl overflow-hidden border border-zinc-700/50 shadow-[0_0_60px_rgba(0,255,170,0.06)]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -239,7 +241,7 @@ function ResultContent() {
         </div>
 
         <p className="text-center text-[11px] text-zinc-600 tracking-widest uppercase">
-          AI Prediction Card
+          {paid ? "✦ HD Prediction Card" : "AI Prediction Card — Free Preview"}
         </p>
 
         {/* ================================================================ */}
@@ -247,9 +249,13 @@ function ResultContent() {
         {/* ================================================================ */}
         <div className="text-center">
           <h1 className="text-xl font-black tracking-tight text-zinc-100">
-            <span>{data.flagA} {data.teamA}</span>
+            <span>
+              {data.flagA} {data.teamA}
+            </span>
             <span className="text-zinc-700 mx-2.5">vs</span>
-            <span>{data.flagB} {data.teamB}</span>
+            <span>
+              {data.flagB} {data.teamB}
+            </span>
           </h1>
           <p className="text-xs text-zinc-500 mt-1">{data.stage}</p>
         </div>
@@ -260,12 +266,10 @@ function ResultContent() {
         {/* ================================================================ */}
         {/*  VIRAL HOOK                                                      */}
         {/* ================================================================ */}
-        <p className="text-center text-xs text-zinc-500 italic">
-          {hook}
-        </p>
+        <p className="text-center text-xs text-zinc-500 italic">{hook}</p>
 
         {/* ================================================================ */}
-        {/*  PREDICTION SUMMARY — score, winner, prob                        */}
+        {/*  PREDICTION SUMMARY                                              */}
         {/* ================================================================ */}
         <div className="text-center">
           <p className="text-5xl font-black text-neon tracking-widest">
@@ -279,7 +283,7 @@ function ResultContent() {
         </div>
 
         {/* ================================================================ */}
-        {/*  VERDICT — 1–2 lines only                                        */}
+        {/*  VERDICT                                                         */}
         {/* ================================================================ */}
         <p className="text-center text-sm text-zinc-400 leading-relaxed px-2">
           {verdict}
@@ -289,10 +293,10 @@ function ResultContent() {
         <div className="w-12 h-px bg-zinc-800 mx-auto" />
 
         {/* ================================================================ */}
-        {/*  CONVERSION ZONE                                                 */}
+        {/*  SHARE ACTIONS                                                   */}
         {/* ================================================================ */}
         <div className="space-y-2.5">
-          {/* Primary: Copy caption */}
+          {/* Copy caption — always available */}
           <button
             onClick={handleCopyCaption}
             className="w-full py-3 bg-neon text-black font-bold rounded-lg hover:bg-neon/90 transition-all text-sm"
@@ -300,31 +304,64 @@ function ResultContent() {
             {copyOk ? "Copied! ✓" : "Copy Caption for X / Instagram"}
           </button>
 
-          {/* Secondary row */}
           {paid ? (
-            <div className="grid grid-cols-2 gap-2.5">
-              <button
-                onClick={handleDownload}
-                className="py-2.5 bg-surface border border-zinc-700 text-zinc-200 font-semibold rounded-lg hover:border-zinc-500 transition-all text-sm"
-              >
-                Download PNG
-              </button>
-              <button
-                onClick={handleOpenImage}
-                className="py-2.5 bg-surface border border-zinc-700 text-zinc-300 font-semibold rounded-lg hover:border-zinc-500 transition-all text-sm"
-              >
-                Open Image
-              </button>
-            </div>
+            /* ===== PAID: HD download + open ===== */
+            <>
+              <div className="grid grid-cols-2 gap-2.5">
+                <button
+                  onClick={handleDownload}
+                  className="py-2.5 bg-surface border border-neon/30 text-neon font-semibold rounded-lg hover:border-neon/60 transition-all text-sm"
+                >
+                  ⬇ Download HD PNG
+                </button>
+                <button
+                  onClick={handleOpenImage}
+                  className="py-2.5 bg-surface border border-zinc-700 text-zinc-300 font-semibold rounded-lg hover:border-zinc-500 transition-all text-sm"
+                >
+                  ↗ Open Image
+                </button>
+              </div>
+              <p className="text-center text-[11px] text-zinc-600">
+                No watermark • Premium quality • Ready to post
+              </p>
+            </>
           ) : (
-            <PaymentButton predictionId={predictionId} />
+            /* ===== FREE: upgrade CTA ===== */
+            <>
+              <PaymentButton predictionId={predictionId} />
+
+              {/* ---- Upgrade benefits section ---- */}
+              <div className="mt-4 p-4 rounded-xl bg-surface border border-zinc-800">
+                <h3 className="text-sm font-bold text-zinc-200 mb-3 text-center">
+                  🔓 Unlock HD No-Watermark Card
+                </h3>
+                <ul className="space-y-2 text-xs text-zinc-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-neon mt-0.5">✓</span>
+                    <span>HD no-watermark image — clean, premium, share-ready</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-neon mt-0.5">✓</span>
+                    <span>1-click HD PNG download for any platform</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-neon mt-0.5">✓</span>
+                    <span>3 style versions coming soon (Bold, Analytical, Hot Take)</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-neon mt-0.5">✓</span>
+                    <span>One-time payment — forever access</span>
+                  </li>
+                </ul>
+              </div>
+            </>
           )}
         </div>
 
         {/* ================================================================ */}
-        {/*  SUBTLE FOOTER                                                   */}
+        {/*  FOOTER                                                          */}
         {/* ================================================================ */}
-        <div className="flex items-center justify-center gap-4 pt-2">
+        <div className="flex items-center justify-center gap-4 pt-1 pb-4">
           <Link
             href="/generate"
             className="text-xs text-zinc-600 hover:text-zinc-400 transition-colors"

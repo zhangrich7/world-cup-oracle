@@ -22,6 +22,11 @@ const STYLE_GUIDES: Record<PredictionStyle, string> = {
     "Use vivid language and emotional stakes — make it feel like a stadium chant.",
     "Capture the heartbreak, glory, and theatre of World Cup football.",
   ].join(" "),
+  "hot-take": [
+    "Give a viral, spicy prediction that feels like breaking news. Use buzzwords like SHOCK, UPSET, EXPOSED, UNSTOPPABLE, CALLING IT.",
+    "Write like a football Twitter/X pundit — short punchy verdicts, maximum hype, zero hedging.",
+    "Make the social caption feel like a headline people CAN'T SCROLL PAST. Use caps strategically for hype words only. Keep it authentic — don't invent fake events or injuries.",
+  ].join(" "),
 };
 
 const LANGUAGE_LABELS: Record<Language, string> = {

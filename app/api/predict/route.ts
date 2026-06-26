@@ -4,7 +4,7 @@ import { predictMatch } from "@/lib/deepseek";
 import { setPrediction } from "@/lib/store";
 
 const VALID_LANGUAGES: Language[] = ["en", "es", "fr", "de", "pt", "ar", "ja", "zh"];
-const VALID_STYLES: PredictionStyle[] = ["bold", "analytical", "emotional"];
+const VALID_STYLES: PredictionStyle[] = ["bold", "analytical", "emotional", "hot-take"];
 
 /**
  * POST /api/predict
