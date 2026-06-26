@@ -49,18 +49,66 @@ function pick<T>(arr: readonly T[], seed: number): T {
 }
 
 const KEY_PLAYER_POOL: Record<string, string[]> = {
-  France: ["Mbappé — pace on the counter", "Griezmann — creative link-up play", "Tchouaméni — midfield dominance"],
+  // Group A
+  Mexico: ["Raúl Jiménez — penalty-box poacher", "Edson Álvarez — midfield destroyer", "Santiago Giménez — clinical finisher"],
+  "South Africa": ["Percy Tau — creative spark", "Lyle Foster — pace on the break", "Ronwen Williams — commanding keeper"],
+  "South Korea": ["Son Heung-min — world-class finisher", "Lee Kang-in — set-piece wizard", "Kim Min-jae — defensive rock"],
+  Czechia: ["Patrik Schick — aerial threat", "Tomáš Souček — box-to-box engine", "Adam Hložek — young wildcard"],
+  // Group B
+  Canada: ["Alphonso Davies — turbo left-back", "Jonathan David — ice-cold finisher", "Tajon Buchanan — tricky winger"],
+  "Bosnia & Herzegovina": ["Edin Džeko — veteran poacher", "Miralem Pjanić — dead-ball maestro", "Rade Krunić — midfield anchor"],
+  Qatar: ["Akram Afif — creative playmaker", "Almoez Ali — record scorer", "Meshaal Barsham — shot-stopper"],
+  Switzerland: ["Granit Xhaka — midfield general", "Breel Embolo — physical presence", "Manuel Akanji — defensive leader"],
+  // Group C
   Brazil: ["Vinícius Jr — unstoppable 1v1", "Rodrygo — clinical in the box", "Alisson — wall in goal"],
-  Argentina: ["Messi — still the magician", "Álvarez — relentless pressing", "Enzo Fernández — tempo controller"],
-  Germany: ["Musiala — dribbling through lines", "Wirtz — chance creation machine", "Kimmich — set-piece delivery"],
-  Spain: ["Lamine Yamal — teenage sensation", "Rodri — midfield metronome", "Olmo — late runs into the box"],
-  England: ["Bellingham — box-to-box engine", "Kane — penalty-box predator", "Saka — cut inside and fire"],
-  Peru: ["Lapadula — aerial threat", "Cueva — dead-ball specialist", "Advíncula — overlapping runs"],
-  Egypt: ["Salah — king of the right wing", "Marmoush — form of his life", "Elneny — shield for the backline"],
-  "Saudi Arabia": ["Al-Dawsari — big-game player", "Al-Shehri — poacher's instinct", "Al-Owais — shot-stopper"],
-  Japan: ["Mitoma — dribbling wizard", "Kubo — through-ball artist", "Tomiyasu — defensive rock"],
-  Uruguay: ["Valverde — long-range rockets", "Núñez — chaos in the box", "Araújo — defensive wall"],
-  Canada: ["Davies — turbo left-back", "David — ice-cold finisher", "Buchanan — tricky winger"],
+  Morocco: ["Achraf Hakimi — marauding fullback", "Brahim Díaz — creative engine", "Yassine Bounou — penalty hero"],
+  Haiti: ["Frantzdy Pierrot — target man", "Duckens Nazon — long-range threat", "Johny Placide — veteran keeper"],
+  Scotland: ["Andrew Robertson — overlapping runs", "Scott McTominay — late box arrival", "John McGinn — pressing machine"],
+  // Group D
+  USA: ["Christian Pulisic — captain clutch", "Folarin Balogun — penalty-box predator", "Weston McKennie — midfield engine"],
+  Paraguay: ["Miguel Almirón — pace merchant", "Julio Enciso — young sensation", "Gustavo Gómez — set-piece target"],
+  Australia: ["Mathew Ryan — veteran keeper", "Jackson Irvine — box-to-box runs", "Craig Goodwin — left-footed precision"],
+  Türkiye: ["Hakan Çalhanoğlu — free-kick specialist", "Arda Güler — teenage phenom", "Kenan Yıldız — breakout star"],
+  // Group E
+  Germany: ["Jamal Musiala — dribbling through lines", "Florian Wirtz — chance creation machine", "Joshua Kimmich — set-piece delivery"],
+  Curaçao: ["Leandro Bacuna — engine room", "Juninho Bacuna — creative spark", "Rangelo Janga — hold-up play"],
+  "Ivory Coast": ["Sébastien Haller — aerial dominance", "Franck Kessié — midfield powerhouse", "Simon Adingra — speed on the wing"],
+  Ecuador: ["Moisés Caicedo — midfield engine", "Piero Hincapié — defensive wall", "Enner Valencia — big-game player"],
+  // Group F
+  Netherlands: ["Virgil van Dijk — defensive giant", "Cody Gakpo — versatile attacker", "Frenkie de Jong — tempo setter"],
+  Japan: ["Kaoru Mitoma — dribbling wizard", "Takefusa Kubo — through-ball artist", "Takehiro Tomiyasu — defensive rock"],
+  Sweden: ["Alexander Isak — silky finisher", "Dejan Kulusevski — creative force", "Victor Lindelöf — defensive leader"],
+  Tunisia: ["Wahbi Khazri — veteran talisman", "Ellyes Skhiri — midfield engine", "Aïssa Laïdouni — pressing machine"],
+  // Group G
+  Belgium: ["Kevin De Bruyne — assist king", "Romelu Lukaku — bulldozer striker", "Jérémy Doku — electric winger"],
+  Egypt: ["Mohamed Salah — king of the right wing", "Omar Marmoush — form of his life", "Mohamed Elneny — shield for the backline"],
+  Iran: ["Mehdi Taremi — clinical poacher", "Sardar Azmoun — aerial threat", "Alireza Beiranvand — long-throw keeper"],
+  "New Zealand": ["Chris Wood — Premier League target man", "Sarpreet Singh — creative midfielder", "Michael Boxall — defensive leader"],
+  // Group H
+  Spain: ["Lamine Yamal — teenage sensation", "Rodri — midfield metronome", "Dani Olmo — late runs into the box"],
+  "Cape Verde": ["Ryan Mendes — speed on the counter", "Bebé — long-range rockets", "Vozinha — shot-stopper"],
+  "Saudi Arabia": ["Salem Al-Dawsari — big-game player", "Saleh Al-Shehri — poacher's instinct", "Mohammed Al-Owais — shot-stopper"],
+  Uruguay: ["Federico Valverde — long-range rockets", "Darwin Núñez — chaos in the box", "Ronald Araújo — defensive wall"],
+  // Group I
+  France: ["Kylian Mbappé — pace on the counter", "Antoine Griezmann — creative link-up", "Aurélien Tchouaméni — midfield dominance"],
+  Senegal: ["Sadio Mané — relentless runner", "Ismaïla Sarr — speed threat", "Kalidou Koulibaly — defensive leader"],
+  Iraq: ["Aymen Hussein — target striker", "Zidane Iqbal — midfield technician", "Jalal Hassan — experienced keeper"],
+  Norway: ["Erling Haaland — goal machine", "Martin Ødegaard — creative captain", "Alexander Sørloth — physical presence"],
+  // Group J
+  Argentina: ["Lionel Messi — still the magician", "Julián Álvarez — relentless pressing", "Enzo Fernández — tempo controller"],
+  Algeria: ["Riyad Mahrez — left-footed magic", "Ismaël Bennacer — midfield anchor", "Amine Gouiri — clinical finisher"],
+  Austria: ["David Alaba — versatile leader", "Marcel Sabitzer — long-range threat", "Christoph Baumgartner — late runs"],
+  Jordan: ["Mousa Al-Tamari — the Jordanian Messi", "Yazan Al-Naimat — pace merchant", "Ihsan Haddad — defensive rock"],
+  // Group K
+  Portugal: ["Cristiano Ronaldo — ultimate big-game player", "Bruno Fernandes — creative engine", "Rafael Leão — unstoppable on his day"],
+  "DR Congo": ["Yoane Wissa — sharp finisher", "Gaël Kakuta — creative spark", "Chancel Mbemba — defensive leader"],
+  Uzbekistan: ["Eldor Shomurodov — captain & talisman", "Jaloliddin Masharipov — creative midfielder", "Utkir Yusupov — reliable keeper"],
+  Colombia: ["Luis Díaz — electrifying winger", "James Rodríguez — World Cup specialist", "Jhon Durán — breakthrough star"],
+  // Group L
+  England: ["Jude Bellingham — box-to-box engine", "Harry Kane — penalty-box predator", "Bukayo Saka — cut inside and fire"],
+  Croatia: ["Luka Modrić — ageless magician", "Joško Gvardiol — defensive titan", "Mateo Kovačić — midfield elegance"],
+  Ghana: ["Mohammed Kudus — explosive attacker", "Thomas Partey — midfield anchor", "Antoine Semenyo — physical presence"],
+  Panama: ["Adalberto Carrasquilla — midfield engine", "José Fajardo — target striker", "Aníbal Godoy — veteran leader"],
 };
 
 const UPSET_POOL = [
