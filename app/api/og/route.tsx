@@ -27,21 +27,24 @@ function parseProb(str: string): number {
   return match ? parseInt(match[1], 10) : 50;
 }
 
-/** Build the viral headline + background color */
+/** Build viral headline badge — sports Twitter energy */
 function viralBadge(prob: string, score: string): { text: string; bg: string; color: string } {
   const pct = parseProb(prob);
   const isDraw = score.toLowerCase().includes("even") || score.toLowerCase().includes("draw") || prob.toLowerCase().includes("even");
 
   if (isDraw) {
-    return { text: "⚡ TOO CLOSE TO CALL", bg: "rgba(250,204,21,0.12)", color: "#facc15" };
+    return { text: "⚡ THIS MATCH IS NOT SAFE", bg: "rgba(250,204,21,0.14)", color: "#facc15" };
   }
-  if (pct >= 70) {
-    return { text: `🤖 AI MATCH ORACLE`, bg: "rgba(0,255,170,0.10)", color: NEON };
+  if (pct >= 80) {
+    return { text: "🤖 AI MATCH ORACLE — DOMINANT", bg: "rgba(0,255,170,0.12)", color: NEON };
+  }
+  if (pct >= 65) {
+    return { text: `🤖 AI MATCH ORACLE — ${pct}% EDGE`, bg: "rgba(0,255,170,0.10)", color: NEON };
   }
   if (pct >= 55) {
-    return { text: `📊 ${pct}% EDGE`, bg: "rgba(0,255,170,0.08)", color: NEON };
+    return { text: `📊 ${pct}% EDGE — THIS COULD GO WRONG`, bg: "rgba(250,204,21,0.10)", color: "#facc15" };
   }
-  return { text: "🚨 UPSET ALERT", bg: "rgba(239,68,68,0.12)", color: "#ef4444" };
+  return { text: "🚨 SHOCK FORECAST — UPSET INCOMING", bg: "rgba(239,68,68,0.14)", color: "#ef4444" };
 }
 
 export async function GET(request: NextRequest) {
@@ -231,13 +234,13 @@ export async function GET(request: NextRequest) {
         </div>
 
         {/* ============================================================ */}
-        {/*  WATERMARK — free version only                                */}
+        {/*  WATERMARK — free version only, clean brand signature         */}
         {/* ============================================================ */}
         {!paid && (
           <div
             style={{
               position: "absolute",
-              bottom: 28,
+              bottom: 24,
               left: 0,
               right: 0,
               display: "flex",
@@ -248,8 +251,8 @@ export async function GET(request: NextRequest) {
               style={{
                 fontSize: 15,
                 fontWeight: 600,
-                color: "rgba(255, 255, 255, 0.12)",
-                letterSpacing: "0.04em",
+                color: "rgba(255, 255, 255, 0.18)",
+                letterSpacing: "0.05em",
               }}
             >
               Generate yours at {domain}

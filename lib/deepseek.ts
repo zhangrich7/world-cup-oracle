@@ -184,7 +184,7 @@ function buildFallback(match: Match, supportedTeam: string, style: PredictionSty
     bold: `${winner === "Draw" ? "Draw incoming!" : `${supportedTeam} takes this!`} 🔥 ${shortVerdict.split(".")[0]}. ${tags.join(" ")}`,
     analytical: `Our model gives ${winner === "Draw" ? "a deadlock" : supportedTeam} the edge. ${shortVerdict.split(".")[0]}. ${tags.join(" ")}`,
     emotional: `I'M SAYING IT NOW — ${winner === "Draw" ? "THIS IS TOO CLOSE TO CALL" : supportedTeam.toUpperCase() + " WINS"}! 😤 ${shortVerdict.split(".")[0]}. ${tags.join(" ")}`,
-    "hot-take": `🚨 AI SHOCK PREDICTION: ${winner === "Draw" ? "SPICY DRAW INCOMING" : supportedTeam.toUpperCase() + " WILL DOMINATE"}! ${shortVerdict.split(".")[0]}. ${tags.join(" ")}`,
+    "hot-take": `🚨 MARK MY WORDS: ${winner === "Draw" ? "THIS ENDS IN A STALEMATE — BOOK IT" : supportedTeam.toUpperCase() + " TAKES THIS — NO DOUBT ABOUT IT"}! ${shortVerdict.split(".")[0]}. ${tags.join(" ")}`,
   };
 
   const caption = captionStyles[style];

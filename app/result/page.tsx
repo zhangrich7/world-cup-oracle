@@ -49,12 +49,59 @@ function firstSentence(text: string): string {
   return cut.slice(0, cut.lastIndexOf(" ")) + "…";
 }
 
-const VIRAL_HOOKS: Record<string, string> = {
-  bold: "Hot take incoming — built for the timeline",
-  analytical: "AI-generated match insight — ready to share",
-  emotional: "Straight from the stands to your feed",
-  "hot-take": "🚨 AI SHOCK PREDICTION — screenshot this",
-};
+/** Parse probability string like "72%" or "Even (50%)" → number */
+function parseProb(str: string): number {
+  const match = str.match(/(\d+)%/);
+  return match ? parseInt(match[1], 10) : 50;
+}
+
+/** Dynamic viral headline based on actual prediction data */
+function getViralHeadline(data: FetchedPrediction): {
+  text: string;
+  subtext: string;
+  color: string;
+} {
+  const p = data.prediction;
+  const prob = parseProb(p.winProbability);
+  const isDraw =
+    p.winner === "Draw" ||
+    p.winner.toLowerCase() === "draw" ||
+    p.winProbability.toLowerCase().includes("even");
+
+  if (isDraw) {
+    return {
+      text: "⚡ THIS MATCH IS NOT SAFE",
+      subtext: "AI says too close to call — screenshot this",
+      color: "text-yellow-400",
+    };
+  }
+  if (prob >= 75) {
+    return {
+      text: "🤖 AI ORACLE FORECAST",
+      subtext: `Heavy favorite — ${p.winner} expected to dominate`,
+      color: "text-neon",
+    };
+  }
+  if (prob >= 60) {
+    return {
+      text: `📊 ${prob}% EDGE — AI PREDICTS`,
+      subtext: `${p.winner} has the edge but anything can happen`,
+      color: "text-neon",
+    };
+  }
+  if (prob >= 50) {
+    return {
+      text: "⚔️ THIS COULD GO WRONG",
+      subtext: "Thin margins — one moment flips everything",
+      color: "text-yellow-400",
+    };
+  }
+  return {
+    text: "🚨 UPSET ALERT — SHOCK INCOMING",
+    subtext: "The underdog has a real shot here",
+    color: "text-red-400",
+  };
+}
 
 // ---------------------------------------------------------------------------
 // Sub-components
@@ -213,7 +260,7 @@ function ResultContent() {
 
   const p = data.prediction;
   const isFallback = data.source === "fallback";
-  const hook = VIRAL_HOOKS[data.style] ?? VIRAL_HOOKS.analytical;
+  const headline = getViralHeadline(data);
   const verdict = firstSentence(p.shortVerdict);
 
   return (
@@ -264,9 +311,16 @@ function ResultContent() {
         <div className="w-12 h-px bg-zinc-800 mx-auto" />
 
         {/* ================================================================ */}
-        {/*  VIRAL HOOK                                                      */}
+        {/*  VIRAL HEADLINE — dynamic based on prediction data                */}
         {/* ================================================================ */}
-        <p className="text-center text-xs text-zinc-500 italic">{hook}</p>
+        <div className="text-center space-y-1.5">
+          <p
+            className={`text-lg font-black tracking-tight ${headline.color}`}
+          >
+            {headline.text}
+          </p>
+          <p className="text-xs text-zinc-500">{headline.subtext}</p>
+        </div>
 
         {/* ================================================================ */}
         {/*  PREDICTION SUMMARY                                              */}
@@ -330,29 +384,45 @@ function ResultContent() {
             <>
               <PaymentButton predictionId={predictionId} />
 
-              {/* ---- Upgrade benefits section ---- */}
-              <div className="mt-4 p-4 rounded-xl bg-surface border border-zinc-800">
-                <h3 className="text-sm font-bold text-zinc-200 mb-3 text-center">
-                  🔓 Unlock HD No-Watermark Card
+              {/* ---- Upgrade benefits section — high contrast, conversion-focused ---- */}
+              <div className="mt-4 p-5 rounded-xl bg-gradient-to-br from-surface to-zinc-900 border-2 border-neon/20 shadow-[0_0_30px_rgba(0,255,170,0.06)]">
+                <h3 className="text-base font-black text-neon mb-1 text-center tracking-tight">
+                  Unlock HD Prediction Card
                 </h3>
-                <ul className="space-y-2 text-xs text-zinc-400">
+                <p className="text-xs text-zinc-500 text-center mb-4">
+                  Premium cyberpunk design — built for social media
+                </p>
+                <ul className="space-y-2.5 text-xs text-zinc-300">
                   <li className="flex items-start gap-2">
-                    <span className="text-neon mt-0.5">✓</span>
-                    <span>HD no-watermark image — clean, premium, share-ready</span>
+                    <span className="text-neon mt-0.5 text-sm">✦</span>
+                    <span>
+                      HD no-watermark image — clean and share-ready
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-neon mt-0.5">✓</span>
-                    <span>1-click HD PNG download for any platform</span>
+                    <span className="text-neon mt-0.5 text-sm">✦</span>
+                    <span>
+                      Premium cyberpunk design — stands out on any feed
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-neon mt-0.5">✓</span>
-                    <span>3 style versions coming soon (Bold, Analytical, Hot Take)</span>
+                    <span className="text-neon mt-0.5 text-sm">✦</span>
+                    <span>
+                      Optimized for Instagram / X — better than screenshots
+                    </span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-neon mt-0.5">✓</span>
-                    <span>One-time payment — forever access</span>
+                    <span className="text-neon mt-0.5 text-sm">✦</span>
+                    <span>
+                      One-time payment — no subscriptions, no nonsense
+                    </span>
                   </li>
                 </ul>
+                <div className="mt-4 pt-3 border-t border-zinc-800/50 text-center">
+                  <span className="text-[11px] text-zinc-500">
+                    ⚡ Most fans unlock in under 60 seconds
+                  </span>
+                </div>
               </div>
             </>
           )}
