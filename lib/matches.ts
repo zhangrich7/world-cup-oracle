@@ -548,6 +548,12 @@ export function getMatchById(id: string): Match | undefined {
   return MATCHES.find((m) => m.id === id);
 }
 
+/** Return only matches on or after today (filter out completed matches) */
+export function getUpcomingMatches(): Match[] {
+  const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+  return MATCHES.filter((m) => m.date >= today);
+}
+
 export const LANGUAGES: { value: Language; label: string }[] = [
   { value: "en", label: "English" },
   { value: "es", label: "Español" },

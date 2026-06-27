@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   MATCHES,
+  getUpcomingMatches,
   LANGUAGES,
   STYLES,
   type PredictionStyle,
@@ -113,7 +114,7 @@ export default function GeneratePage() {
               <option value="" disabled>
                 Choose a match...
               </option>
-              {MATCHES.map((m) => (
+              {getUpcomingMatches().map((m) => (
                 <option key={m.id} value={m.id}>
                   {m.flagA} {m.teamA} vs {m.teamB} {m.flagB} — {m.stage} (
                   {m.date})
