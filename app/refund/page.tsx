@@ -57,7 +57,7 @@ export default function RefundPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1 mt-2">
               <li>Subject line: &ldquo;Refund Request&rdquo;</li>
-              <li>Your Lemon Squeezy order number or the email address used at checkout</li>
+              <li>Your PayPal transaction ID or the email address used at checkout</li>
               <li>A brief description of the issue</li>
             </ul>
             <p className="mt-2">We review all requests within 2 business days.</p>

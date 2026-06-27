@@ -62,7 +62,7 @@ export default function TermsPage() {
             <h2 className="text-lg font-bold text-zinc-100 mt-8 mb-3">6. Payments and HD Unlock</h2>
             <p>
               The HD Unlock is a one-time payment of $2.99 USD that removes the watermark from your prediction card and
-              enables PNG download. All payments are processed securely through Lemon Squeezy. We do not store your
+              enables PNG download. All payments are processed securely through PayPal. We do not store your
               payment card details.
             </p>
           </section>

@@ -22,7 +22,7 @@ export default function PrivacyPage() {
             </p>
             <ul className="list-disc pl-5 space-y-1 mt-2">
               <li><strong>Prediction data:</strong> Match selections, supported teams, style preferences, and generated predictions are stored temporarily in server memory to generate your share card. This data is automatically purged and is not persisted to a database.</li>
-              <li><strong>Payment information:</strong> When you purchase the HD Unlock, payment is processed by Lemon Squeezy (our payment processor). We do not receive or store your full credit card number, CVV, or billing address. Lemon Squeezy provides us with a transaction confirmation only.</li>
+              <li><strong>Payment information:</strong> When you purchase the HD Unlock, payment is processed by PayPal (our payment processor). We do not receive or store your full credit card number, CVV, or billing address. PayPal provides us with a transaction confirmation only.</li>
               <li><strong>Usage data:</strong> We do not use cookies, analytics trackers, or any third-party tracking scripts. We do not collect IP addresses, browser fingerprints, or device information for tracking purposes.</li>
             </ul>
           </section>
@@ -31,7 +31,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-bold text-zinc-100 mt-8 mb-3">2. How We Use Your Information</h2>
             <ul className="list-disc pl-5 space-y-1">
               <li>To generate your AI match prediction and share card</li>
-              <li>To process your HD Unlock payment via Lemon Squeezy</li>
+              <li>To process your HD Unlock payment via PayPal</li>
               <li>To respond to customer support inquiries</li>
             </ul>
             <p className="mt-2">We do not sell, rent, or share your data with third parties for marketing purposes.</p>
@@ -42,7 +42,7 @@ export default function PrivacyPage() {
             <p>
               Prediction data is stored in volatile server memory (RAM) only and is automatically removed when the
               server restarts or the memory is reclaimed. We do not maintain a persistent database of user predictions.
-              Payment transaction records are retained by Lemon Squeezy per their data retention policy.
+              Payment transaction records are retained by PayPal per their data retention policy.
             </p>
           </section>
 
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             <p>We rely on the following third-party services:</p>
             <ul className="list-disc pl-5 space-y-1 mt-2">
               <li><strong>DeepSeek API:</strong> Processes match data to generate AI predictions. Review DeepSeek&apos;s privacy policy for details on how they handle API requests.</li>
-              <li><strong>Lemon Squeezy:</strong> Processes payments for the HD Unlock feature. Review Lemon Squeezy&apos;s privacy policy for details on payment data handling.</li>
+              <li><strong>PayPal:</strong> Processes payments for the HD Unlock feature. Review PayPal&apos;s privacy policy for details on payment data handling.</li>
             </ul>
           </section>
 
@@ -68,7 +68,7 @@ export default function PrivacyPage() {
             <h2 className="text-lg font-bold text-zinc-100 mt-8 mb-3">6. Data Security</h2>
             <p>
               We use HTTPS encryption for all data in transit. Since we do not store user data in a persistent database,
-              the risk of data breach is minimal. Payment processing is handled entirely by Lemon Squeezy&apos;s secure
+              the risk of data breach is minimal. Payment processing is handled entirely by PayPal&apos;s secure
               infrastructure.
             </p>
           </section>

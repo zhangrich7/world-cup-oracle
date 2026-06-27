@@ -106,7 +106,7 @@ export default function PricingPage() {
           <p>
             <strong className="text-zinc-300">What payment methods do you accept?</strong>
             <br />
-            Credit / debit cards via Lemon Squeezy (Stripe-powered). Apple Pay and Google Pay supported.
+            Credit / debit cards via PayPal. One-time, no subscription.
           </p>
           <p>
             <strong className="text-zinc-300">Can I get a refund?</strong>
